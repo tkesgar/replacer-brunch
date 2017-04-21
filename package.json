@@ -1,6 +1,6 @@
 {
   "name": "replacer-brunch",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Adds string replacement support to Brunch.",
   "author": "Ted Kesgar (https://tkesgar.com/)",
   "homepage": "https://github.com/tkesgar/replacer-brunch",

@@ -1,5 +1,7 @@
 ## replacer-brunch
 
+[![Build Status](https://travis-ci.org/tkesgar/replacer-brunch.svg?branch=master)](https://travis-ci.org/tkesgar/replacer-brunch)
+
 Ruthlessly simple string replacement plugin to [Brunch](http://brunch.io).
 
 ## Configuration

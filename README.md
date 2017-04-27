@@ -9,7 +9,7 @@ Ruthlessly simple string replacement plugin to [Brunch](http://brunch.io).
 ```js
 replacer: {
   // dict is an array containing objects with key and value property.
-  // String replacement are processed in order from first to last.
+  // String replacements are processed in order from first to last.
   dict: [
     {
       // key will be replaced by value.
@@ -17,30 +17,31 @@ replacer: {
       value: '__VALUE__'
     },
     {
-      // You can use anything as value, with non-string values will be passed
-      // through JSON.stringify().
+      // You can use anything as value.
+      // Non-string values will be passed through JSON.stringify().
       key: '__PACKAGE__',
-      value: require('package.json')
+      value: require('./package.json')
     },
     {
       // By default replacer uses String.replace(), so only the first
-      // occurrence will be replaced if you use a string as key. You can use
-      // a global regex to replace all occurrences.
+      // occurrence will be replaced if you use a string as key.
+      // You can use a global regex to replace all occurrences.
       key: /__ENV__/g,
       value: process.env.NODE_ENV
     },
     {
-      // Common use cases are getting NODE_ENV, versioning, etc.
+      // Use cases: getting NODE_ENV, package.json values,
+      // custom configuration JSON, generate random string, etc.
       key: /{#VERSION}/g,
       value: 'v1.0.0'
     }
   ],
-  // By default replacer uses String.prototype.replace function.
-  // If you want to replace all occurrences, you can supply your own
-  // replacement function here:
-  //  - str (String) - string to be processed
-  //  - key (any) - key passed from the dict
-  //  - value (String) - replacement value
+  // By default replacer uses String.replace() function.
+  // If you want to use a different function, you can supply
+  // your own replacement function here with this signature:
+  //  - str (string) - string to be processed
+  //  - key (any) - key from the dict
+  //  - value (string) - replacement value
   replace: (str, key, value) => str.split(key).join(value)
 }
 ```
@@ -57,5 +58,4 @@ Or, do manual install:
 
 ## License
 
-Licensed under
-[MIT License](https://github.com/tkesgar/replacer-brunch/blob/master/LICENSE).
+Licensed under [MIT License](https://github.com/tkesgar/replacer-brunch/blob/master/LICENSE).

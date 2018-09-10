@@ -41,9 +41,15 @@ describe('Plugin', () => {
       dict: [{key: '__KEY__', value: '__VALUE__'}],
     }}});
 
-    it('should replace key with value', () => {
+    it('should not replace when key is absent', () => {
       const file1 = {data: 'test'};
       const file2 = {data: 'test'};
+      return expect(plugin.compile(file1)).to.eventually.deep.equal(file2);
+    });
+
+    it('should replace key with value', () => {
+      const file1 = {data: '__KEY__'};
+      const file2 = {data: '__VALUE__'};
       return expect(plugin.compile(file1)).to.eventually.deep.equal(file2);
     });
 
@@ -73,6 +79,18 @@ describe('Plugin', () => {
   });
 
   describe('using non-strings as value', () => {
+
+    describe('with unspecified replacement value', () => {
+      const plugin = new Plugin({plugins: {replacer: {
+        dict: [{key: /__KEY__/g}],
+      }}});
+
+      it('should replace key with empty string', () => {
+        const file1 = {data: '__KEY__'};
+        const file2 = {data: ''};
+        return expect(plugin.compile(file1)).to.eventually.deep.equal(file2);
+      });
+    });
 
     describe('with object', () => {
       const plugin = new Plugin({plugins: {replacer: {
@@ -121,6 +139,19 @@ describe('Plugin', () => {
     it('should replace key with value', () => {
       const file1 = {data: 'The quick brown __KEY__ jumps over the lazy __KEY__'};
       const file2 = {data: 'The quick brown __VALUE__ jumps over the lazy __VALUE__'};
+      return expect(plugin.compile(file1)).to.eventually.deep.equal(file2);
+    });
+  });
+
+  describe('using custom replace function to add path', () => {
+    const plugin = new Plugin({plugins: {replacer: {
+      dict: [{key: '__KEY__', value: '__VALUE__'}],
+      replace: (str, key, value, path) => str.split(key).join(path),
+    }}});
+
+    it('should replace key with path', () => {
+      const file1 = {path: 'hello.js', data: 'The quick brown __KEY__ jumps over the lazy __KEY__'};
+      const file2 = {path: 'hello.js', data: 'The quick brown hello.js jumps over the lazy hello.js'};
       return expect(plugin.compile(file1)).to.eventually.deep.equal(file2);
     });
   });

@@ -34,6 +34,10 @@ replacer: {
       // custom configuration JSON, generate random string, etc.
       key: /{#VERSION}/g,
       value: 'v1.0.0'
+    },
+    {
+      key: 'remove_me'
+      // If value is omitted, the replacement is the empty string
     }
   ],
   // By default replacer uses String.replace() function.
@@ -42,7 +46,25 @@ replacer: {
   //  - str (string) - string to be processed
   //  - key (any) - key from the dict
   //  - value (string) - replacement value
-  replace: (str, key, value) => str.split(key).join(value)
+  //  - path (string) - the path of the file being processed
+  replace: (str, key, value, path) => str.split(key).join(value)
+}
+```
+
+For example, to replace `__filename` with the name of the file being
+processed, you can use:
+
+```js
+replacer: {
+  dict: [
+    {
+      key: /\b__filename\b/,
+      // No value needed - the custom replacer below supplies it
+    }
+  ],
+  replace: (str, key, value, path) => {
+    return str.split(key).join(`'${path}'`);
+  }
 }
 ```
 
@@ -59,3 +81,8 @@ Or, do manual install:
 ## License
 
 Licensed under [MIT License](https://github.com/tkesgar/replacer-brunch/blob/master/LICENSE).
+
+## Contributors
+
+* [Ted Kesgar](https://github.com/tkesgar)
+* [Chris White](https://github.com/cxw42)

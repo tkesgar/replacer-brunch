@@ -6,12 +6,18 @@ class BrunchReplacer {
 
     // Set defaults for config.
     if (!this.config.dict) this.config.dict = [];
-    if (!this.config.replace) this.config.replace = (str, key, value) => str.replace(key, value);
+    if (!this.config.replace) {
+      this.config.replace = (str, key, value) => str.replace(key, value);
+    }
 
     // Stringify non-string values.
     for (const entry of this.config.dict) {
       const value = entry.value;
-      entry.value = typeof value === 'string' ? value : JSON.stringify(value);
+      if (typeof value === 'undefined') {
+        entry.value = '';
+      } else {
+        entry.value = typeof value === 'string' ? value : JSON.stringify(value);
+      }
     }
   }
 
@@ -26,7 +32,7 @@ class BrunchReplacer {
     for (const entry of dict) {
       const key = entry.key;
       const value = entry.value;
-      file.data = replace(file.data, key, value);
+      file.data = replace(file.data, key, value, file.path);
     }
 
     return Promise.resolve(file);

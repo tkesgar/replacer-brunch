@@ -2,7 +2,11 @@
   "name": "replacer-brunch",
   "version": "1.1.0",
   "description": "Adds string replacement support to Brunch.",
-  "author": "Ted Kesgar (https://tkesgar.com/)",
+  "author": "Ted Kesgar <t.kesgar@live.com> (https://tkesgar.com/)",
+  "contributors": [
+    "Ted Kesgar <t.kesgar@live.com> (https://tkesgar.com/)",
+    "Chris White"
+  ],
   "homepage": "https://github.com/tkesgar/replacer-brunch",
   "license": "MIT",
   "repository": {
